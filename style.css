@@ -80,10 +80,21 @@ body {
     flex-grow: 1;
     grid-template-columns: repeat(5, 4em);
     grid-template-rows: repeat(6, 4em);
+    gap: .25em;
+    margin-bottom: 1em;
 
 }
 
 .tile {
+    color: white;
+    border: .05em solid hsl(240, 2%, 23%);
+    font-size: 2em;
+    text-transform: uppercase;
+    font-weight: solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
 
 }
 
