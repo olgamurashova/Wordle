@@ -15290,23 +15290,34 @@ const dictionary = [
     "shave"
   ];
 
+
+  startInteraction(); 
+
+
   function startInteraction() {
     document.addEventListener("click", handleMouseClick)
     document.addEventListener("keydown", handleKeyPress)
   }
 
+  //-------------------///
+
+  function stoptInteraction() {
+    document.removeEventListener("click", handleMouseClick)
+    document.removeEventListener("keydown", handleKeyPress)
+  }
+
   function handleMouseClick(e) {
-    if(e.target.matches("[data-key]")) {
+    if (e.target.matches("[data-key]")) {
         presskey(e.target.dataset.key)
         return
     }
 
-    if(e.target.matches("[data-enter]")) {
+    if (e.target.matches("[data-enter]")) {
         submitGuess()
         return
     }
 
-    if(e.target.matches("[data-delete")) {
+    if (e.target.matches("[data-delete")) {
         deletekey()
         return
     }
@@ -15314,7 +15325,25 @@ const dictionary = [
 
   }
 
+  //----------------//
+
   function handleKeyPress(e) {
+    console.log(e);
+    if (e.key === "Enter") {
+        submitGuess()
+        return
+    }
+
+    if (e.key === "Backspace" || e.key === "Delete") {
+        deletekey()
+        return
+
+    }
+
+    if (e.key.match(/^[a-z]$/)) {
+        pressKey(e.key)
+        return
+    }
 
 
   }
