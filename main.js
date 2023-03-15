@@ -15290,7 +15290,9 @@ const dictionary = [
     "shave"
   ];
 
-  const guessGrid = document.querySelector("[data-guess-grid]")
+  const guessGrid = document.querySelector("[data-guess-grid]");
+
+  const wordLength = 5;
 
 
   startInteraction(); 
@@ -15310,7 +15312,7 @@ const dictionary = [
 
   function handleMouseClick(e) {
     if (e.target.matches("[data-key]")) {
-        presskey(e.target.dataset.key)
+        pressKey(e.target.dataset.key)
         return
     }
 
@@ -15330,7 +15332,7 @@ const dictionary = [
   //----------------//
 
   function handleKeyPress(e) {
-    console.log(e);
+    
     if (e.key === "Enter") {
         submitGuess()
         return
@@ -15353,9 +15355,18 @@ const dictionary = [
   //-------//
 
   function pressKey(key) {
-    const nextTile = document.querySelector(":not([data-letter])");
-    nextTile.dataset.letter = key.toLowerCase()
-    nextTile.textContent = key
-    nextTile.dataset.state = 'active'
+    const activeTiles = getActiveTiles();
+    if (activeTiles.length >= wordLength) return;
+    const nextTile = guessGrid.querySelector(":not([data-letter])");
+    nextTile.dataset.letter = key.toLowerCase();
+    nextTile.textContent = key;
+    nextTile.dataset.state = "active";
+
+  };
+
+  //--------------------//
+
+  function getActiveTiles() {
+    return guessGrid.querySelectorAll('[data-state="active"]');
 
   }
