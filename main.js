@@ -15290,6 +15290,8 @@ const dictionary = [
     "shave"
   ];
 
+  const guessGrid = document.querySelector("[data-guess-grid]")
+
 
   startInteraction(); 
 
@@ -15299,7 +15301,7 @@ const dictionary = [
     document.addEventListener("keydown", handleKeyPress)
   }
 
-  //-------------------///
+  //-------------------//
 
   function stoptInteraction() {
     document.removeEventListener("click", handleMouseClick)
@@ -15345,5 +15347,15 @@ const dictionary = [
         return
     }
 
+
+  }
+
+  //-------//
+
+  function pressKey(key) {
+    const nextTile = document.querySelector(":not([data-letter])");
+    nextTile.dataset.letter = key.toLowerCase()
+    nextTile.textContent = key
+    nextTile.dataset.state = 'active'
 
   }
