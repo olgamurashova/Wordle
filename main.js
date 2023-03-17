@@ -15396,8 +15396,11 @@ const dictionary = [
 
     const activeTiles = [...getActiveTiles()];
     if (activeTiles.length !== wordLength) {
-        console.log("not long enough")
+        showAlert("Not enough letters");
+        shakeTiles(activeTiles)
         return
     }
 
   }
+
+  
