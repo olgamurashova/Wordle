@@ -15294,6 +15294,14 @@ const dictionary = [
 
   const wordLength = 5;
 
+  const offsetFromdate = new Date(2023, 0, 1);
+
+  const mOffset = Date.now - offsetFromdate;
+
+  const dayOffset = mOffset / 1000 / 60 / 60 / 24;
+
+  const targetWord = targetWords[Math.floor(dayOffset)];
+
 
   startInteraction(); 
 
@@ -15339,7 +15347,7 @@ const dictionary = [
     }
 
     if (e.key === "Backspace" || e.key === "Delete") {
-        deletekey()
+        deleteKey()
         return
 
     }
@@ -15369,12 +15377,10 @@ const dictionary = [
   function deleteKey() {
     const activeTiles = getActiveTiles();
     const lastTile = activeTiles[activeTiles.length -1];
-    if (lastTile =- null) return;
+    if (lastTile === null) return;
     lastTile.textContent = "";
     delete lastTile.dataset.state
     delete lastTile.dataset.letter
-
-
 
   }
 
@@ -15382,5 +15388,16 @@ const dictionary = [
 
   function getActiveTiles() {
     return guessGrid.querySelectorAll('[data-state="active"]');
+
+  }
+
+  //--------------------//
+  function submitGuess() {
+
+    const activeTiles = [...getActiveTiles()];
+    if (activeTiles.length !== wordLength) {
+        console.log("not long enough")
+        return
+    }
 
   }
