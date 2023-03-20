@@ -15291,6 +15291,7 @@ const dictionary = [
   ];
 
   const guessGrid = document.querySelector("[data-guess-grid]");
+  const alertContainer = document.querySelector("[data-alert-container]");
 
   const wordLength = 5;
 
@@ -15403,4 +15404,22 @@ const dictionary = [
 
   }
 
-  
+  //-------------------------//
+
+  function showAlert(message, duration = 1000) {
+    const alert = document.createElement("div");
+    alert.textContent = message;
+
+    alert.classList.add("alert");
+    alertContainer.prepend(alert);
+    if (duration == null) return;
+
+    setTimeout(() => {
+        alert.classList.add("hide");
+        alert.addEventListener("transitionend", () => {
+            alert.remove();
+        })
+
+    }, duration);
+
+  }
