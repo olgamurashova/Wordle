@@ -15305,6 +15305,8 @@ const dictionary = [
   
   const keyboard = document.querySelector("[data-keyboard]");
 
+  const FLIP_AMIMATION_DURATION = 500;
+
 
   startInteraction(); 
 
@@ -15421,9 +15423,26 @@ const dictionary = [
 
   //------------------------//
 
-  function flipTiles(tile, index, array, guess) {
+  function flipTile(tile, index, array, guess) {
     const letter = tile.dataset.letter;
-    const key = keyboard.querySelector(`{data-key = "$(letter)"}`);
+    const key = keyboard.querySelector(`[data-key = "$(letter)"]`);
+    setTimeout(() => {
+        tile.classList.add("flip")
+
+    }, index * FLIP_AMIMATION_DURATION / 2);
+
+    tile.addEventListener("transitioned", () => {
+        tile.classList.remove("flip")
+        if(targetWord[index] === letter) {
+            tile.dataset.state = "correct"
+            key.classList.add("correct")
+
+        } else if (targetWord.includes(letter)) {
+
+            tile.dataset.state = "wrong"
+            key.classList.add = "wrong"
+        }
+    })
 
 
 
@@ -15431,6 +15450,9 @@ const dictionary = [
   }
 
   //-------------------------//
+
+
+  //======================//
 
   function showAlert(message, duration = 1000) {
     const alert = document.createElement("div");
