@@ -15302,6 +15302,8 @@ const dictionary = [
   const dayOffset = mOffset / 1000 / 60 / 60 / 24;
 
   const targetWord = targetWords[Math.floor(dayOffset)];
+  
+  const keyboard = document.querySelector("[data-keyboard]");
 
 
   startInteraction(); 
@@ -15401,6 +15403,30 @@ const dictionary = [
         shakeTiles(activeTiles)
         return
     }
+
+    const guess = activeTiles.reduce((word, tile) => {
+        return word + tile.dataset.letter
+    }, "")
+    if(!dictionary.includes(guess)) {
+        showAlert("The word doesn't exist");
+        shakeTiles(activeTiles);
+        return 
+    }
+    stop.Interaction();
+    activeTiles.forEach((...params) => flipTile(...params, guess))
+
+
+
+  }
+
+  //------------------------//
+
+  function flipTiles(tile, index, array, guess) {
+    const letter = tile.dataset.letter;
+    const key = keyboard.querySelector(`{data-key = "$(letter)"}`);
+
+
+
 
   }
 
