@@ -15307,6 +15307,8 @@ const dictionary = [
 
   const FLIP_AMIMATION_DURATION = 500;
 
+  const DANCE_ANIMATION = 500;
+
 
   startInteraction(); 
 
@@ -15425,7 +15427,7 @@ const dictionary = [
 
   function flipTile(tile, index, array, guess) {
     const letter = tile.dataset.letter;
-    const key = keyboard.querySelector(`[data-key = "$(letter)"]`);
+    const key = keyboard.querySelector(`[data-key = "$(letter)"i]`);
     setTimeout(() => {
         tile.classList.add("flip")
 
@@ -15439,14 +15441,22 @@ const dictionary = [
 
         } else if (targetWord.includes(letter)) {
 
+            tile.dataset.state = "wrong-location"
+            key.classList.add = "wrong-location"
+        } else {
             tile.dataset.state = "wrong"
             key.classList.add = "wrong"
+
         }
-    })
+    if (index === array.length - 1) {
+        tile.addEventListener("transitionend", () => {
+            startInteraction(); 
+            checkWinLose(guess, array)
+        }, { once: true })
+        
+    }
 
-
-
-
+    }, { once: true })
   }
 
   //-------------------------//
@@ -15483,4 +15493,31 @@ const dictionary = [
         }, {once: true})
 
     })
+  }
+
+  function checkWinLose(giess, tiles) {
+    if  (guess === targetWord) {
+        showAlert("You win", 5000)
+        danceTiles(tiles)
+        stoptInteraction()
+        return;
+    }
+
+  }
+
+  function danceTiles(tiles) {
+    tiles.forEach((tile, index) => {
+        setTimeout(() => {
+            tile.classList.add("dance")
+            tile.addEventListener("animationend", 
+            () => {
+            tile.classList.remove("dance");
+
+        }, 
+        {once: true}
+        )       
+            }, index * DANCE_ANIMATION / 5)
+
+        })
+    
   }
