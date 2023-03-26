@@ -15320,7 +15320,7 @@ const dictionary = [
 
   //-------------------//
 
-  function stoptInteraction() {
+  function stopInteraction() {
     document.removeEventListener("click", handleMouseClick)
     document.removeEventListener("keydown", handleKeyPress)
   }
@@ -15337,7 +15337,7 @@ const dictionary = [
     }
 
     if (e.target.matches("[data-delete")) {
-        deletekey()
+        deleteKey()
         return
     }
     
@@ -15416,7 +15416,7 @@ const dictionary = [
         shakeTiles(activeTiles);
         return 
     }
-    stop.Interaction();
+    stopInteraction();
     activeTiles.forEach((...params) => flipTile(...params, guess))
 
 
@@ -15431,21 +15431,22 @@ const dictionary = [
     setTimeout(() => {
         tile.classList.add("flip")
 
-    }, index * FLIP_AMIMATION_DURATION / 2);
+    }, index * FLIP_AMIMATION_DURATION / 2)
 
-    tile.addEventListener("transitioned", () => {
+    tile.addEventListener("transitionend",
+     () => {
         tile.classList.remove("flip")
-        if(targetWord[index] === letter) {
+        if (targetWord[index] === letter) {
             tile.dataset.state = "correct"
             key.classList.add("correct")
 
         } else if (targetWord.includes(letter)) {
 
             tile.dataset.state = "wrong-location"
-            key.classList.add = "wrong-location"
+            key.classList.add = ("wrong-location")
         } else {
             tile.dataset.state = "wrong"
-            key.classList.add = "wrong"
+            key.classList.add = ("wrong")
 
         }
     if (index === array.length - 1) {
@@ -15495,12 +15496,18 @@ const dictionary = [
     })
   }
 
-  function checkWinLose(giess, tiles) {
+  function checkWinLose(guess, tiles) {
     if  (guess === targetWord) {
         showAlert("You win", 5000)
         danceTiles(tiles)
-        stoptInteraction()
+        stopInteraction()
         return;
+    }
+
+    const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
+    if (remainingTiles.length === 0) {
+        showAlert(targetWord.toUpperCase(), null)
+        stopInteraction()
     }
 
   }
